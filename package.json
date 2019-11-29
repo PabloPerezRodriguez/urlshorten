@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:7000",
   "dependencies": {
+    "@ant-design/dark-theme": "^1.0.3",
+    "antd": "^3.25.3",
     "express": "^4.17.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
