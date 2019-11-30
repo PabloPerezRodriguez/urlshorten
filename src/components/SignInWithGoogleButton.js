@@ -3,13 +3,27 @@ import { Button } from 'antd'
 import { withFirebase } from './Firebase'
 
 class SignInWithGoogleButtonBase extends Component {
+  state = {
+    loading: false
+  }
+
+  enterLoading = () => {
+    this.setState({ loading: true })
+  }
+
+  leaveLoading = () => {
+    this.setState({ loading: false })
+  }
+
   onClick = event => {
+    this.enterLoading()
     this.props.firebase.auth
       .signInWithPopup(this.props.firebase.googleProvider)
-      .then(function (result) {
+      .then(result => {
         // Successfully signed in
+        this.leaveLoading()
       })
-      .catch(function (error) {
+      .catch(error => {
         // Handle Errors here.
         var errorCode = error.code
         var errorMessage = error.message
@@ -18,7 +32,11 @@ class SignInWithGoogleButtonBase extends Component {
   }
   render () {
     return (
-      <Button type='primary' onClick={this.onClick}>
+      <Button
+        type='primary'
+        loading={this.state.loading}
+        onClick={this.onClick}
+      >
         Inicia sesión con Google
       </Button>
     )
