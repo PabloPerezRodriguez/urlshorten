@@ -1,21 +1,48 @@
-import React from 'react'
-import { Typography, Button } from 'antd'
+import React, { Component } from 'react'
+import LoginPage from './components/LoginPage'
 import './App.css'
+import { withFirebase } from './components/Firebase'
+import { Spin } from 'antd'
 
-const { Title } = Typography
+class AppBase extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      authUser: undefined
+    }
+  }
+  componentDidMount () {
+    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser ? this.setState({ authUser }) : this.setState({ authUser: null })
+    })
+  }
 
-function App () {
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <Title level={2}>Acortador de URLs</Title>
-        {/* Make custom sign in with google component */}
-        <Button type='primary' onClick={() => {}}>
-          Inicia sesión con Google
-        </Button>
-      </header>
-    </div>
-  )
+  componentWillUnmount () {
+    this.listener()
+  }
+
+  render () {
+    if (this.state.authUser === undefined) {
+      return (
+        <div className='App'>
+          <div className='App-header'>
+            <Spin size='large' />
+          </div>
+        </div>
+      )
+    }
+    if (this.state.authUser === null) {
+      return (
+        <div className='App'>
+          <LoginPage />
+        </div>
+      )
+    } else {
+      return <div className='App' />
+    }
+  }
 }
+
+const App = withFirebase(AppBase)
 
 export default App
