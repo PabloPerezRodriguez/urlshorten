@@ -4,6 +4,7 @@ import './App.css'
 import { withFirebase } from './components/Firebase'
 import { Spin } from 'antd'
 import LoggedInPage from './components/LoggedIn/LoggedInPage'
+import UnauthorizedPage from './components/UnauthorizedPage'
 
 class AppBase extends Component {
   constructor (props) {
@@ -39,7 +40,15 @@ class AppBase extends Component {
         </div>
       )
     } else {
-      return <LoggedInPage />
+      if (
+        this.state.authUser.providerData.some(
+          provider => provider.email === 'pablo.rabanales@gmail.com'
+        )
+      ) {
+        return <LoggedInPage />
+      } else {
+        return <UnauthorizedPage />
+      }
     }
   }
 }

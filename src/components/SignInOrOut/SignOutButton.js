@@ -18,7 +18,7 @@ class SignOutButtonBase extends Component {
   }
   render () {
     return (
-      <Button type='primary' onClick={this.onClick}>
+      <Button type='danger' onClick={this.onClick}>
         Cerrar sesión
       </Button>
     )
