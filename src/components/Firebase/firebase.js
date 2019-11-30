@@ -20,5 +20,9 @@ class Firebase {
     this.auth.languageCode = 'es'
     this.googleProvider = new app.auth.GoogleAuthProvider()
   }
+
+  async getToken () {
+    return this.auth.currentUser.getIdToken(/* forceRefresh */ true)
+  }
 }
 export default Firebase
