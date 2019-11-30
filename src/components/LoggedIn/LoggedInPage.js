@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import LoggedInSider from './LoggedInSider'
+import UrlPage from './UrlPage'
 
 const { Header, Content, Footer } = Layout
 
@@ -19,7 +20,7 @@ class LoggedInPage extends React.Component {
               minHeight: 280
             }}
           >
-            Content
+            <UrlPage />
           </Content>
         </Layout>
       </Layout>
