@@ -3,6 +3,7 @@ import LoginPage from './components/LoginPage'
 import './App.css'
 import { withFirebase } from './components/Firebase'
 import { Spin } from 'antd'
+import LoggedInPage from './components/LoggedIn/LoggedInPage'
 
 class AppBase extends Component {
   constructor (props) {
@@ -38,7 +39,11 @@ class AppBase extends Component {
         </div>
       )
     } else {
-      return <div className='App' />
+      return (
+        <div className='App'>
+          <LoggedInPage />
+        </div>
+      )
     }
   }
 }

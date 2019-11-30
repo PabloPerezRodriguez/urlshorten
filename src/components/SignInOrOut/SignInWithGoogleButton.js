@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'antd'
-import { withFirebase } from './Firebase'
+import { withFirebase } from '../Firebase'
 
 class SignInWithGoogleButtonBase extends Component {
   state = {
