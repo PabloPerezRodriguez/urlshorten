@@ -39,11 +39,7 @@ class AppBase extends Component {
         </div>
       )
     } else {
-      return (
-        <div className='App'>
-          <LoggedInPage />
-        </div>
-      )
+      return <LoggedInPage />
     }
   }
 }

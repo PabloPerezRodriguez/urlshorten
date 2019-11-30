@@ -1,13 +1,30 @@
 import React from 'react'
-import { Typography } from 'antd'
-import SignOutButton from '../SignInOrOut/SignOutButton'
+import { Layout } from 'antd'
+import LoggedInSider from './LoggedInSider'
 
-const { Title } = Typography
+const { Header, Content, Footer } = Layout
 
-const LoggedInPage = () => (
-  <div class='App-header'>
-    <Title level={2}>Sesión iniciada</Title>
-    <SignOutButton />
-  </div>
-)
+class LoggedInPage extends React.Component {
+  render () {
+    return (
+      <Layout id='layout' style={{ minHeight: '100vh' }}>
+        <LoggedInSider />
+        <Layout>
+          <Header theme='dark' style={{ padding: 0 }} />
+          <Content
+            theme='dark'
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              minHeight: 280
+            }}
+          >
+            Content
+          </Content>
+        </Layout>
+      </Layout>
+    )
+  }
+}
+
 export default LoggedInPage
