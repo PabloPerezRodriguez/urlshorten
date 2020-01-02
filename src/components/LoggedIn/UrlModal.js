@@ -1,13 +1,13 @@
 import React from 'react'
 import { Modal, Button, Form, Input, Icon } from 'antd'
 
-class AddUrlModal extends React.Component {
+class UrlModal extends React.Component {
   constructor (props) {
     super(props)
     this.props = props
 
     this.state = {
-      visible: false,
+      visible: false /* pass this to parent if not visible */,
       confirmLoading: false,
 
       /* text and status */
@@ -27,7 +27,11 @@ class AddUrlModal extends React.Component {
   }
 
   componentWillReceiveProps (props) {
-    this.setState({ visible: props.visible })
+    this.setState({
+      visible: props.visible,
+      longValue: props.long,
+      shortValue: props.short
+    })
   }
 
   handleOk = () => {
@@ -53,6 +57,7 @@ class AddUrlModal extends React.Component {
             longValue: '',
             longHelp: ''
           })
+          this.props.onDissapear()
         })
     } else {
       this.setState({
@@ -71,6 +76,7 @@ class AddUrlModal extends React.Component {
       longValue: '',
       longHelp: ''
     })
+    this.props.onDissapear()
   }
 
   validate = () => {
@@ -95,7 +101,7 @@ class AddUrlModal extends React.Component {
     return (
       <div>
         <Modal
-          title='Crear apodo para un enlace'
+          title={this.props.title}
           visible={this.state.visible}
           // onOk={this.handleOk}
           onCancel={this.handleCancel}
@@ -109,7 +115,7 @@ class AddUrlModal extends React.Component {
               loading={this.state.confirmLoading}
               onClick={this.handleOk}
             >
-              Crear
+              {this.props.submitText}
             </Button>
           ]}
         >
@@ -163,4 +169,4 @@ class AddUrlModal extends React.Component {
   }
 }
 
-export default AddUrlModal
+export default UrlModal

@@ -62,6 +62,8 @@ app.post('/url', async (req, res) => {
 
 app.get('/:url', async (req, res) => {
   const shortURL = req.params.url
+  console.log(`shortened url requested: ${shortURL}`)
+
   if (shortURL == null) return res.status(400).end()
   const expandedURL = await db.get(shortURL)
   res.send(expandedURL)

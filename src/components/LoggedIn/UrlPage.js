@@ -2,7 +2,7 @@ import React from 'react'
 import { List, Button, Spin, Icon } from 'antd'
 import { withFirebase } from '../Firebase'
 import { Layout } from 'antd'
-import AddUrlModal from './AddUrlModal'
+import UrlModal from './UrlModal'
 const { Header, Content, Footer } = Layout
 
 class UrlPage extends React.Component {
@@ -12,7 +12,10 @@ class UrlPage extends React.Component {
 
     this.state = {
       urls: [],
-      addUrlModalVisible: false
+      addUrlModalVisible: false,
+      editUrlModalVisible: false,
+      editUrlModalShort: '',
+      editUrlModalLong: ''
     }
 
     this.fetchURLs()
@@ -87,6 +90,14 @@ class UrlPage extends React.Component {
     })
   }
 
+  showEditUrlDialog = (short, long) => {
+    this.setState({
+      editUrlModalShort: short,
+      editUrlModalLong: long,
+      editUrlModalVisible: true
+    })
+  }
+
   createNewUrl = item => {
     return this.fetch({
       code: 'set',
@@ -144,16 +155,18 @@ class UrlPage extends React.Component {
               <Spin spinning={item.spinning}>
                 <List.Item>
                   <List.Item.Meta
-                    title={<a href='https://ant.design'>{item.short}</a>}
-                    description={<a href='https://ant.design'>{item.long}</a>}
+                    title={<span>{item.short}</span>}
+                    description={<a href={item.long}>{item.long}</a>}
                   />
-                  <Button type='link'>Editar</Button>
                   <Button
                     type='link'
-                    onClick={() => {
-                      this.deleteURL(item)
-                    }}
+                    onClick={() =>
+                      this.showEditUrlDialog(item.short, item.long)
+                    }
                   >
+                    Editar
+                  </Button>
+                  <Button type='link' onClick={() => this.deleteURL(item)}>
                     Borrar
                   </Button>
                 </List.Item>
@@ -161,9 +174,31 @@ class UrlPage extends React.Component {
             )}
           />
         </Content>
-        <AddUrlModal
+        <UrlModal
           visible={this.state.addUrlModalVisible}
+          onDissapear={() =>
+            this.setState({
+              addUrlModalVisible: false
+            })
+          }
           onSend={this.createNewUrl}
+          title='Crear apodo para un enlace'
+          submitText='Crear'
+        />
+        <UrlModal
+          visible={this.state.editUrlModalVisible}
+          onDissapear={() =>
+            this.setState({
+              editUrlModalVisible: false,
+              editUrlModalLong: '',
+              editUrlModalShort: ''
+            })
+          }
+          onSend={this.createNewUrl}
+          title='Editar entrada'
+          submitText='Confirmar'
+          short={this.state.editUrlModalShort}
+          long={this.state.editUrlModalLong}
         />
       </div>
     )
