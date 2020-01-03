@@ -59,6 +59,7 @@ app.post('/url', async (req, res) => {
 
   return res.status(400).end()
 })
+app.use('/url', express.static(__dirname + '/build'))
 
 app.get('/:url', async (req, res) => {
   const shortURL = req.params.url
@@ -69,7 +70,6 @@ app.get('/:url', async (req, res) => {
   if (expandedURL == null) return res.status(404).end()
   res.redirect(expandedURL)
 })
-
 db.load().then(() => {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
